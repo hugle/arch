@@ -2,6 +2,8 @@
 # versions.  Allows substantial flexability for choosing versions of
 # required packages and is simpler to use to test up-to-date scientific Python
 # stack
+sudo: false
+
 language: python
 
 env:
@@ -30,6 +32,11 @@ matrix:
     - NUMPY=1.8.2
   - python: 2.7
     env:
+    - PYTHON=2.7
+    - NUMBA=0.20
+    - COVERAGE=false
+  - python: 2.7
+    env:
     - PYTHON=3.3
     - NUMPY=1.9
     - SCIPY=0.14
@@ -41,8 +48,13 @@ matrix:
     - PYTHON=3.4
     - NUMPY=1.9
     - SCIPY=0.15
-    - NUMBA=0.18
+    - NUMBA=0.19
     - MATPLOTLIB=1.4
+
+addons:
+  apt:
+    packages:
+    - pandoc
 
 notifications:
   email:
@@ -54,7 +66,6 @@ before_install:
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
   - export PATH=/home/travis/miniconda/bin:$PATH
-  - sudo apt-get install pandoc
   - conda update --yes --quiet conda
   # Fix for headless TravisCI
   - "export DISPLAY=:99.0"
